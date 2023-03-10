@@ -9,7 +9,7 @@ impl Randomizer {
     pub fn new(seed: &str, idx: &str) -> Self {
         let mut seed = seed.to_string();
         seed.push_str( idx );
-        Self {rng: Seeder::from("stripy zebra").make_rng()}
+        Self {rng: Seeder::from(seed).make_rng()}
     }
 
     pub fn words(&mut self, cnt: u32) -> Vec<String> {
@@ -35,3 +35,16 @@ impl Randomizer {
             .to_string()
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn randomizer() {
+        let mut randomizer = Randomizer::new( "foo", "bar" );
+        let word = randomizer.words(1);
+        assert_eq!( word[0], "bogged" );
+    }
+}
+
