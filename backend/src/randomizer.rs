@@ -1,5 +1,5 @@
 use rand_seeder::Seeder;
-use rand::{rngs::StdRng, Rng, SeedableRng};
+use rand::{rngs::StdRng, Rng};
 use crate::wordlist::get_wordlist;
 pub struct Randomizer {
     rng: StdRng,

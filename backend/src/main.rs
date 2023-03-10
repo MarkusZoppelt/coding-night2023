@@ -1,5 +1,5 @@
-use std::net::{TcpListener, TcpStream};
 use std::io::Read;
+use std::net::{TcpListener, TcpStream};
 
 mod randomizer;
 mod video_provider;
@@ -19,17 +19,21 @@ async fn main() -> std::io::Result<()> {
             Ok(stream) => {
                 handle_connection(stream).await;
             }
-            Err(e) => { /* connection failed */ }
+            Err(e) => {
+                println!("Error: {}", e);
+            }
         }
     }
     Ok(())
 }
 
+#[allow(clippy::unused_io_amount)]
 async fn handle_connection(mut stream: TcpStream) {
     // handle the connection
     // check if the request is a GET request
 
     let mut buffer = [0; 1024];
+
     stream.read(&mut buffer).unwrap();
 
     if buffer.starts_with(b"GET") {
@@ -41,8 +45,5 @@ async fn handle_connection(mut stream: TcpStream) {
         video_provider.get_video_from_words().await.unwrap();
 
         println!("words: {:?}", words);
-
     }
-
-
 }
