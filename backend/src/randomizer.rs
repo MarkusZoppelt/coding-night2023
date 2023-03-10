@@ -1,6 +1,6 @@
-use rand_seeder::Seeder;
-use rand::{rngs::StdRng, Rng};
 use crate::wordlist::get_wordlist;
+use rand::{rngs::StdRng, Rng};
+use rand_seeder::Seeder;
 pub struct Randomizer {
     rng: StdRng,
 }
@@ -8,8 +8,10 @@ pub struct Randomizer {
 impl Randomizer {
     pub fn new(seed: &str, idx: &str) -> Self {
         let mut seed = seed.to_string();
-        seed.push_str( idx );
-        Self {rng: Seeder::from(seed).make_rng()}
+        seed.push_str(idx);
+        Self {
+            rng: Seeder::from(seed).make_rng(),
+        }
     }
 
     pub fn words(&mut self, cnt: u32) -> Vec<String> {
@@ -29,22 +31,17 @@ impl Randomizer {
             number += dice_roll;
         }
 
-        get_wordlist()
-            .get_word(number)
-            .unwrap()
-            .to_string()
+        get_wordlist().get_word(number).unwrap().to_string()
     }
 }
-
 
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
     fn randomizer() {
-        let mut randomizer = Randomizer::new( "foo", "bar" );
+        let mut randomizer = Randomizer::new("foo", "bar");
         let word = randomizer.words(1);
-        assert_eq!( word[0], "bogged" );
+        assert_eq!(word[0], "bogged");
     }
 }
-
