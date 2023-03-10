@@ -6,7 +6,7 @@ pub struct VideoProvider {
 }
 
 impl VideoProvider {
-    pub fn new(words: &Vec<String>) -> Self {
+    pub fn new(words: &[String]) -> Self {
         Self {
             words: words.to_vec(),
         }
@@ -61,6 +61,7 @@ impl VideoProvider {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Video {
     title: String,
