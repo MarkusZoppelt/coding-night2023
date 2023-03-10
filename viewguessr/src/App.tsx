@@ -6,6 +6,8 @@ import { LandingPage } from './pages/Landing';
 import { ViewGuessr } from './pages/ViewGuessr';
 import { Result } from './pages/Result';
 
+const gameLength :number = 5;
+
 function App() {
   const state :SessionState = {
     seed : "",
@@ -16,11 +18,27 @@ function App() {
 
   const [appState, setAppState] = useState(state);
 
+  if (appState.seed == "")
+  {
+    return (
+      <div className='App'>
+        <LandingPage/>
+      </div>
+    );
+  }
+
+  if (appState.guessedViews.length >= gameLength)
+  {
+    return (
+      <div className='App'>
+        <Result/>
+      </div>
+    )
+  }
+
   return (
     <div className="App">
-      <LandingPage/>
       <ViewGuessr/>
-      <Result/>
     </div>
   );
 }
