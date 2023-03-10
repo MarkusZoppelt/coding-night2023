@@ -1,8 +1,9 @@
-use crate::wordlist::get_wordlist;
+use crate::wordlist::WordList;
 use rand::{rngs::StdRng, Rng};
 use rand_seeder::Seeder;
 pub struct Randomizer {
     rng: StdRng,
+    wordlist: WordList,
 }
 
 impl Randomizer {
@@ -11,6 +12,7 @@ impl Randomizer {
         seed.push_str(idx);
         Self {
             rng: Seeder::from(seed).make_rng(),
+            wordlist: WordList::new(),
         }
     }
 
@@ -31,7 +33,7 @@ impl Randomizer {
             number += dice_roll;
         }
 
-        get_wordlist().get_word(number).unwrap().to_string()
+        self.wordlist.get_word(number).unwrap().to_string()
     }
 }
 

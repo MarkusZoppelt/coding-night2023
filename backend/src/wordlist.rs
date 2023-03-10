@@ -5,14 +5,8 @@ pub struct WordList {
 }
 
 impl WordList {
-    pub fn get_word(&self, number: u32) -> Option<&String> {
-        self.map.get(&number)
-    }
-}
-
-pub fn get_wordlist() -> WordList {
-    WordList {
-        map: [
+    pub fn new() -> Self {
+        WordList { map: [
             (11111, "abacus".to_string()),
             (11112, "abdomen".to_string()),
             (11113, "abdominal".to_string()),
@@ -7789,9 +7783,13 @@ pub fn get_wordlist() -> WordList {
             (66664, "zoologist".to_string()),
             (66665, "zoology".to_string()),
             (66666, "zoom".to_string()),
-        ]
-        .iter()
-        .cloned()
-        .collect(),
+            ]
+            .iter()
+            .cloned()
+            .collect(),
+        }
+    }
+    pub fn get_word(&self, number: u32) -> Option<&String> {
+        self.map.get(&number)
     }
 }
