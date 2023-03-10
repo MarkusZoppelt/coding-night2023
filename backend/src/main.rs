@@ -1,4 +1,6 @@
 use std::io::Read;
+use std::io::Write;
+
 use std::net::{TcpListener, TcpStream};
 
 mod randomizer;
@@ -30,20 +32,29 @@ async fn main() -> std::io::Result<()> {
 #[allow(clippy::unused_io_amount)]
 async fn handle_connection(mut stream: TcpStream) {
     // handle the connection
-    // check if the request is a GET request
 
     let mut buffer = [0; 1024];
-
     stream.read(&mut buffer).unwrap();
 
+    // check if the request is a GET request
     if buffer.starts_with(b"GET") {
         let mut randomizer = Randomizer::new("seed", "0");
 
         let words = randomizer.words(4);
 
         let mut video_provider = VideoProvider::new(&words);
-        video_provider.get_video_from_words().await.unwrap();
+        let video = video_provider.get_video_from_words().await.unwrap();
 
-        println!("words: {:?}", words);
+        let video_json = serde_json::to_string(&video).unwrap();
+
+        let response = format!(
+            "HTTP/1.1 200 OK\r
+
+{}",
+            video_json
+        );
+
+        stream.write(response.as_bytes()).unwrap();
+        stream.flush().unwrap();
     }
 }

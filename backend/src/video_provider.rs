@@ -1,6 +1,19 @@
 use rustube::Id;
 use rustube::VideoFetcher;
 
+use serde::Serialize;
+
+#[allow(dead_code)]
+#[derive(Debug, Serialize)]
+pub struct Video {
+    title: String,
+    url: String,
+    description: String,
+    length: u32,
+    views: u32,
+    creator: String,
+}
+
 pub struct VideoProvider {
     words: Vec<String>,
 }
@@ -14,8 +27,6 @@ impl VideoProvider {
 
     pub async fn get_video_from_words(&mut self) -> Result<Video, Box<dyn std::error::Error>> {
         // do a search query on youtube with the words
-        // get the first result
-
         let words_str = self.words.join("+");
         let url = format!("https://www.youtube.com/results?search_query={}", words_str);
 
@@ -26,7 +37,7 @@ impl VideoProvider {
         // use regex to find the first match
         let re = regex::Regex::new(r#"/watch\?v=[a-zA-Z0-9_-]{11}"#).unwrap();
 
-        // print the first match
+        // find the first match
         let result = re
             .captures_iter(&response)
             .next()
@@ -34,8 +45,8 @@ impl VideoProvider {
             .get(0)
             .unwrap()
             .as_str();
-        println!("first match: {}", result);
 
+        // construct the video url
         let video_url = format!("https://www.youtube.com{}", result);
 
         let id = Id::from_raw(&video_url).unwrap();
@@ -45,28 +56,19 @@ impl VideoProvider {
             .await
             .unwrap();
 
+        // get the video details
         let video_details = descrambler.video_details();
 
+        // construct the video
         let video = Video {
             title: video_details.clone().title,
             url: video_url,
+            description: video_details.clone().short_description,
             length: video_details.length_seconds as u32,
             views: video_details.view_count as u32,
             creator: video_details.clone().author,
         };
 
-        println!("video: {:?}", video);
-
         Ok(video)
     }
-}
-
-#[allow(dead_code)]
-#[derive(Debug)]
-pub struct Video {
-    title: String,
-    url: String,
-    length: u32,
-    views: u32,
-    creator: String,
 }
