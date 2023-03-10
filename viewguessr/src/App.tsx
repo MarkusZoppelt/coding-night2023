@@ -18,11 +18,16 @@ function App() {
 
   const [appState, setAppState] = useState(state);
 
+  const setParentState = (state: SessionState) =>
+  {
+    setAppState(state);
+  }
+
   if (appState.seed == "")
   {
     return (
       <div className='App'>
-        <LandingPage/>
+        <LandingPage state={appState} callback={setParentState}/>
       </div>
     );
   }
