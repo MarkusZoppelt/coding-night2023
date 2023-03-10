@@ -8,7 +8,8 @@ mod wordlist;
 use crate::randomizer::Randomizer;
 use crate::video_provider::VideoProvider;
 
-fn main() -> std::io::Result<()> {
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
     // start a listener for GET requests on port 6969 that runs forever
 
     let listener = TcpListener::bind("127.0.0.1:6969").unwrap();
@@ -16,7 +17,7 @@ fn main() -> std::io::Result<()> {
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
-                handle_connection(stream);
+                handle_connection(stream).await;
             }
             Err(e) => { /* connection failed */ }
         }
@@ -24,7 +25,7 @@ fn main() -> std::io::Result<()> {
     Ok(())
 }
 
-fn handle_connection(mut stream: TcpStream) {
+async fn handle_connection(mut stream: TcpStream) {
     // handle the connection
     // check if the request is a GET request
 
@@ -37,6 +38,7 @@ fn handle_connection(mut stream: TcpStream) {
         let words = randomizer.words(4);
 
         let mut video_provider = VideoProvider::new(&words);
+        video_provider.get_video_from_words().await.unwrap();
 
         println!("words: {:?}", words);
 
