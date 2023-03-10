@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
+import { SessionState } from './session-state/SessionState';
 import './App.css';
+import { LandingPage } from './pages/Landing';
+import { ViewGuessr } from './pages/ViewGuessr';
+import { Result } from './pages/Result';
 
 function App() {
+  const state :SessionState = {
+    seed : "",
+    videoNumber : 0,
+    actualViews : [],
+    guessedViews : []
+  }
+
+  const [appState, setAppState] = useState(state);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LandingPage/>
+      <ViewGuessr/>
+      <Result/>
     </div>
   );
 }
