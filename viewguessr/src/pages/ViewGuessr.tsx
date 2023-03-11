@@ -40,6 +40,7 @@ export function ViewGuessr(props: React.PropsWithChildren<ViewGuessrProps>)
 
     const videoDisplay = videoData.url == "" ? (<Spin/>) : (
         <div>
+            <div>video {props.state.videoNumber + 1}/5</div>
             <iframe src={videoData.url.replace("/watch?v=", "/embed/")} width="800px" height="450px"/>
             <h1>{videoData.title}</h1>
             <h2>by {videoData.creator}</h2>
