@@ -6,14 +6,14 @@ import { LandingPage } from './pages/Landing';
 import { ViewGuessr } from './pages/ViewGuessr';
 import { Result } from './pages/Result';
 
-const gameLength :number = 5;
+const gameLength :number = 3;
 
 function App() {
   const state :SessionState = {
-    seed : "",
+    seed : "test",
     videoNumber : 0,
-    actualViews : [],
-    guessedViews : []
+    actualViews : [ 1000, 1500, 2000, 123, 123 ],
+    guessedViews : [ 500, 1000, 1500, 456, 128936 ]
   }
 
   const [appState, setAppState] = useState(state);
@@ -36,7 +36,7 @@ function App() {
   {
     return (
       <div className='App'>
-        <Result/>
+        <Result state={appState} callback={setParentState}/>
       </div>
     )
   }
