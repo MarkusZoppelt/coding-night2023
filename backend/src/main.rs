@@ -57,7 +57,7 @@ async fn handle_request(buffer: &[u8]) -> String {
     let video = video_provider.get_video_from_words().await.unwrap();
     let video_json = serde_json::to_string(&video).unwrap();
     let response = format!(
-        "HTTP/1.1 200 OK\r
+        "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\n\r
 
 {}",
         video_json
