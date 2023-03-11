@@ -43,7 +43,7 @@ function App() {
 
   return (
     <div className="App">
-      <ViewGuessr state={appState} callback={setAppState}/>
+      <ViewGuessr state={appState} callback={setParentState}/>
     </div>
   );
 }
