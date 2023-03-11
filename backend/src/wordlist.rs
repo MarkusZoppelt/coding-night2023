@@ -7793,3 +7793,15 @@ impl WordList {
         self.map.get(&number)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn get_word() {
+        let wordlist = WordList::new();
+        let word = wordlist.get_word( 33425 ).unwrap();
+        assert_eq!(word, "happening");
+    }
+}
+
