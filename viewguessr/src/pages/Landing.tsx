@@ -27,7 +27,7 @@ export function LandingPage(props: React.PropsWithChildren<LandingPageProps>)
 
     function NewGameHandler() {
         let seed = input != '' ? input : GetRandomSeed(seedLength);
-        props.callback({seed : seed, actualViews : [], guessedViews : [], videoNumber : 0});
+        props.callback({seed : seed, actualViews : [], guessedViews : [], videoNumber : 0, videoData: []});
     }
 
     return (

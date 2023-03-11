@@ -45,7 +45,6 @@ export function ViewGuessr(props: React.PropsWithChildren<ViewGuessrProps>)
             <iframe src={videoData.url.replace("/watch?v=", "/embed/")} width="800px" height="450px"/>
             <h1>{videoData.title}</h1>
             <h2>by {videoData.creator}</h2>
-            <div>description: <br/>{videoData.description}</div>
             <br/>
         </div>
         )
