@@ -15,6 +15,7 @@ export function ViewGuessr(props: React.PropsWithChildren<ViewGuessrProps>)
     const [videoData, setVideoData] = useState(defaultVideoData)
     const [guesses, setGuesses] = useState<number[]>([...props.state.guessedViews])
     const [actualViews, setActualViews] = useState<number[]>([...props.state.actualViews])
+    const [watchedVideos, setWatchedVideos] = useState<VideoData[]>([...props.state.videoData])
     const [isResultModalOpen, setIsResultModalOpen] = useState(false)
     const [inputValue, setInputValue] = useState("")
 
@@ -55,13 +56,15 @@ export function ViewGuessr(props: React.PropsWithChildren<ViewGuessrProps>)
         const updatedActualViews = actualViews
         const updatedGuesses = guesses
         const updatedVideonumber = props.state.videoNumber + 1
-        props.callback({seed: updatedSeed, actualViews: updatedActualViews, guessedViews: updatedGuesses, videoNumber: updatedVideonumber})
+        const updatedWatchedVideos = watchedVideos
+        props.callback({seed: updatedSeed, actualViews: updatedActualViews, guessedViews: updatedGuesses, videoNumber: updatedVideonumber, videoData: updatedWatchedVideos})
         setInputValue("")
         setVideoData(defaultVideoData)
     }
     
     const onClick = () => {
         setActualViews([...props.state.actualViews, videoData.views])
+        setWatchedVideos([...props.state.videoData, videoData])
         setIsResultModalOpen(guesses.length > props.state.guessedViews.length)
     }
 

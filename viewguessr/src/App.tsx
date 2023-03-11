@@ -5,6 +5,9 @@ import './App.css';
 import { LandingPage } from './pages/Landing';
 import { ViewGuessr } from './pages/ViewGuessr';
 import { Result } from './pages/Result';
+import { Layout } from 'antd';
+
+const { Header, Content, Footer } = Layout;
 
 const gameLength :number = 5;
 
@@ -13,7 +16,8 @@ function App() {
     seed : "",
     videoNumber : 0,
     actualViews : [],
-    guessedViews : []
+    guessedViews : [],
+    videoData: []
   }
 
   const [appState, setAppState] = useState(state);
@@ -23,28 +27,27 @@ function App() {
     setAppState(state);
   }
 
+  let page = <ViewGuessr state={appState} callback={setParentState}/>
+
   if (appState.seed == "")
   {
-    return (
-      <div className='App'>
-        <LandingPage state={appState} callback={setParentState}/>
-      </div>
-    );
+    page = <LandingPage state={appState} callback={setParentState}/>
   }
 
   if (appState.guessedViews.length >= gameLength)
   {
-    return (
-      <div className='App'>
-        <Result/>
-      </div>
-    )
+    let page = <Result/>
   }
 
   return (
-    <div className="App">
-      <ViewGuessr state={appState} callback={setParentState}/>
-    </div>
+    <Layout className='App'>
+        <Header>
+          <div className='Logo'>ViewGuessr</div>
+        </Header>
+        <Content style={{ padding: '0 50px' }}>
+          {page}
+        </Content>
+      </Layout>
   );
 }
 
