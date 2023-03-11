@@ -31,7 +31,7 @@ export function ViewGuessr(props: React.PropsWithChildren<ViewGuessrProps>)
             }
         })
         .then((data) => {
-            setVideoData({title: data.title, url: data.url, views: data.views})
+            setVideoData({title: data.title, url: data.url, views: data.views, description: data.description, creator: data.creator})
         })
         .catch((error) => {
             console.log(error)
@@ -42,7 +42,9 @@ export function ViewGuessr(props: React.PropsWithChildren<ViewGuessrProps>)
         <div>
             <iframe src={videoData.url.replace("/watch?v=", "/embed/")} width="800px" height="450px"/>
             <h1>{videoData.title}</h1>
-            <div>{videoData.description}</div>
+            <h2>by {videoData.creator}</h2>
+            <div>description: <br/>{videoData.description}</div>
+            <br/>
         </div>
         )
 
