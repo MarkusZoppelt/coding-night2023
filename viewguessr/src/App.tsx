@@ -6,7 +6,7 @@ import { LandingPage } from './pages/Landing';
 import { ViewGuessr } from './pages/ViewGuessr';
 import { Result } from './pages/Result';
 
-const gameLength :number = 5;
+const gameLength :number = 3;
 
 function App() {
   const state :SessionState = {
@@ -36,7 +36,7 @@ function App() {
   {
     return (
       <div className='App'>
-        <Result/>
+        <Result state={appState} callback={setParentState}/>
       </div>
     )
   }
